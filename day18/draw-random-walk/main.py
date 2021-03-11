@@ -8,7 +8,6 @@ timmy.shape("turtle")
 timmy.pensize(15)
 timmy.speed(10)
 
-colors = ["red", "green", "yellow", "blue", "cyan", "magenta", "teal"]
 angles = [0, 90, 180, 270]
 
 def random_color():
