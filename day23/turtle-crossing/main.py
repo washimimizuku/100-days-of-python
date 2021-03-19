@@ -3,6 +3,7 @@ from turtle import Screen
 from player import Player
 from car_manager import CarManager
 from scoreboard import Scoreboard
+from random import randint
 
 screen = Screen()
 screen.setup(width=600, height=600)
@@ -16,14 +17,11 @@ screen.listen()
 screen.onkey(player.move, "Up")
 
 game_is_on = True
-counter = 0
-level = 0
 while game_is_on:
     time.sleep(0.1)
-    if counter % 6 == 0:
-        car_manager.add_car(level)
+    if randint(1, 6) == 1:
+        car_manager.add_car()
     car_manager.move_all_cars()
-    counter += 1
     screen.update()
 
     # Detect collision with car
@@ -33,9 +31,8 @@ while game_is_on:
 
     # Detect reaching finish line
     if player.detect_win():
-        level += 1
         player.reset_position()
-        car_manager.new_level(level)
+        car_manager.new_level()
         scoreboard.new_level()
 
 screen.exitonclick()
