@@ -1,2 +1,0 @@
-colorgram.py==1.2.0
-Pillow==8.1.2
