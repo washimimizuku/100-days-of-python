@@ -1,7 +1,15 @@
+import os
+
+
+LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+FILENAME = "weather_data.csv"
+FULL_PATH = os.path.join(LOCATION, FILENAME)
+
+
 # Using CSV lib
 import csv
 
-with open("weather_data.csv") as weather_file:
+with open(FULL_PATH) as weather_file:
     data = csv.reader(weather_file)
     temperatures = []
     for row in data:
@@ -12,5 +20,5 @@ with open("weather_data.csv") as weather_file:
 # Using pandas lib
 import pandas
 
-data = pandas.read_csv("weather_data.csv")
+data = pandas.read_csv(FULL_PATH)
 print(data["temp"])

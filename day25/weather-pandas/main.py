@@ -1,6 +1,15 @@
+import os
 import pandas
 
-data = pandas.read_csv("weather_data.csv")
+
+LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+FILENAME_WEATHER_DATA = "weather_data.csv"
+FILENAME_NEW_DATA = "new_data.csv"
+FULL_PATH_WEATHER_DATA = os.path.join(LOCATION, FILENAME_WEATHER_DATA)
+FULL_PATH_NEW_DATA = os.path.join(LOCATION, FILENAME_NEW_DATA)
+
+
+data = pandas.read_csv(FULL_PATH_WEATHER_DATA)
 print(data)
 
 # Transform CSV data to dictionary
@@ -42,4 +51,4 @@ data = pandas.DataFrame(data_dict)
 print(data)
 
 # Save dataframe as CSV
-data.to_csv("new_data.csv")
+data.to_csv(FULL_PATH_NEW_DATA)

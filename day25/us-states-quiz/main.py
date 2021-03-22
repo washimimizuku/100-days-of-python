@@ -1,15 +1,24 @@
 import turtle
 import pandas
+import os
+
+
+LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+FILENAME_STATES = "50_states.csv"
+FILENAME_BACKGROUND = "blank_states_img.gif"
+FILENAME_STATES_TO_LEARN = "states_to_learn.csv"
+FULL_PATH_STATES = os.path.join(LOCATION, FILENAME_STATES)
+FULL_PATH_BACKGROUND = os.path.join(LOCATION, FILENAME_BACKGROUND)
+FULL_PATH_STATES_TO_LEARN = os.path.join(LOCATION, FILENAME_STATES_TO_LEARN)
+
 
 screen = turtle.Screen()
 screen.title("U.S. States Game")
 
-image_file = "blank_states_img.gif"
-screen.addshape(image_file)
+screen.addshape(FULL_PATH_BACKGROUND)
+turtle.shape(FULL_PATH_BACKGROUND)
 
-turtle.shape(image_file)
-
-states_data = pandas.read_csv("50_states.csv")
+states_data = pandas.read_csv(FULL_PATH_STATES)
 us_states = states_data.state.to_list()
 
 guessed_states = []
@@ -24,7 +33,7 @@ while len(guessed_states) < 50:
             if state not in guessed_states:
                 missing_states.append(state)
         new_data = pandas.DataFrame(missing_states)
-        new_data.to_csv("states_to_learn.csv")
+        new_data.to_csv(FULL_PATH_STATES_TO_LEARN)
         break
     
     if answer_state in us_states:

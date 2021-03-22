@@ -6,6 +6,7 @@ ALIGNMENT = "center"
 FONT = ("Courier", 24, "normal")
 LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
 FILENAME = "data.txt"
+FULL_PATH = os.path.join(LOCATION, FILENAME)
 
 
 class Scoreboard(Turtle):
@@ -13,7 +14,7 @@ class Scoreboard(Turtle):
     def __init__(self):
         super().__init__()
         self.score = 0
-        with open(os.path.join(LOCATION, FILENAME)) as file:
+        with open(FULL_PATH) as file:
             self.high_score = int(file.read())
         self.color("white")
         self.penup()

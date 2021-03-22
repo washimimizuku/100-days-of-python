@@ -1,9 +1,16 @@
 import colorgram
 import turtle as t
 import random
+import os
+
+
+LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
+FILENAME = "hilda.jpeg"
+FULL_PATH = os.path.join(LOCATION, FILENAME)
+
 
 rgb_colors = []
-colors = colorgram.extract('hilda.jpeg', 30)
+colors = colorgram.extract(FULL_PATH, 30)
 for color in colors:
     r = color.rgb.r
     g = color.rgb.g
