@@ -27,6 +27,3 @@ print(short_names)
 
 long_names = [name.upper() for name in names if len(name) >= 5]
 print(long_names)
-
-odd_list = [n for n in range(1,10) if n % 2 != 0]
-print(odd_list)
