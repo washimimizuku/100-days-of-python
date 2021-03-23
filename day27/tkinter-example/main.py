@@ -4,50 +4,28 @@ import tkinter
 window = tkinter.Tk()
 window.title("My First GUI Program")
 window.minsize(width=500, height=300)
+window.config(padx=100, pady=100)
 
 # Label
-my_label = tkinter.Label(text="I Am a Label", font=("Arial", 24, "bold"))
-my_label.pack()
+label = tkinter.Label(text="I Am a Label", font=("Arial", 24, "bold"))
+label["text"] = "New Text"
+label.config(text="Really New Text")
+label.grid(column=0, row=0)
+label.config(padx=50, pady=50)
 
-my_label["text"] = "New Text"
-my_label.config(text="Really New Text")
+# Entry
+input = tkinter.Entry(width=10)
+input.grid(column=1, row=1)
 
 # Button
 def button_clicked():
     print("I got clicked")
     text = input.get()
-    my_label["text"] = text
+    label["text"] = text
 
 button = tkinter.Button(text="Click Me", command=button_clicked)
-button.pack()
-
-# Entry
-input = tkinter.Entry(width=10)
-input.pack()
-
-# Text
+button.grid(column=2, row=2)
 
 
-
-# Spinbox
-
-
-
-# Scale
-
-
-
-# Checkbox
-
-
-
-# Radiobutton
-
-
-
-# Listbox
-
-
-
-# "While" loop
+# Window main loop
 window.mainloop()
