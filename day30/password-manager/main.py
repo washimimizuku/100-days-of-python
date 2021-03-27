@@ -40,6 +40,7 @@ def save_password():
     website = website_entry.get()
     email = email_entry.get()
     password = password_entry.get()
+
     new_data = {
         website: {
             "email": email,
@@ -68,8 +69,34 @@ def save_password():
             password_entry.delete(0, tkinter.END)
             website_entry.focus()
 
+# ---------------------------- SEARCH PASSWORD ----------------------------- #
+def search_password():
+    website = website_entry.get()
+    try:
+        with open(DATA_FILE, 'r') as data_file:
+            data = json.load(data_file)
+    except FileNotFoundError:
+        messagebox.showinfo(title="No password file", message="There is no password file yet.\nPlease create some passwords first.")
+    else:
+        if website in data:
+            website_data = data[website]
 
-# ---------------------------- UI SETUP ------------------------------- #
+            email = website_data["email"]
+            email_entry.delete(0, tkinter.END)
+            email_entry.insert(tkinter.END, string=email)
+
+            password = website_data["password"]
+            password_entry.delete(0, tkinter.END)
+            password_entry.insert(tkinter.END, string=password)
+
+            pyperclip.copy(password)
+
+            messagebox.showinfo(title="Website found", message=f"These are the details entered:\nWebsite: {website}\nEmail: {email}\nPassword: {password}\nThis password is now on your clipboard")
+
+        else:
+            messagebox.showinfo(title="Website not found", message="I cannot find a password for that website.\nPlease check your spelling.")
+
+# ---------------------------- UI SETUP ------------------------------------ #
 window = tkinter.Tk() 
 window.title("Password Manager")
 window.config(padx=50, pady=50)
@@ -84,9 +111,12 @@ canvas.grid(column=1, row=0)
 website_label = tkinter.Label(text="Website:")
 website_label.grid(column=0, row=1)
 
-website_entry = tkinter.Entry(width=40)
-website_entry.grid(column=1, row=1, columnspan=2)
+website_entry = tkinter.Entry(width=23)
+website_entry.grid(column=1, row=1)
 website_entry.focus()
+
+search_button = tkinter.Button(text="Search", width=13, command=search_password)
+search_button.grid(column=2, row=1)
 
 # Row 2
 email_label = tkinter.Label(text="Email/Username:")
