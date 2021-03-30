@@ -8,6 +8,7 @@ pandas = "*"
 "colorgram.py" = "*"
 prettytable = "*"
 pyperclip = "*"
+requests = "*"
 
 [dev-packages]
 
