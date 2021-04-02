@@ -9,6 +9,8 @@ pandas = "*"
 prettytable = "*"
 pyperclip = "*"
 requests = "*"
+twilio = "*"
+python-dotenv = "*"
 
 [dev-packages]
 
