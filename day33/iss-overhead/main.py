@@ -3,10 +3,13 @@ import requests
 import smtplib
 import time
 from datetime import datetime
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-MY_LAT = 47.402210 # Dietikon latitude
-MY_LONG = 8.392733 # Dietikon longitude
+MY_LATITUDE = os.environ.get('MY_LATITUDE')
+MY_LONGITUDE = os.environ.get('MY_LONGITUDE')
 
 EMAIL_SERVER = os.environ.get('EMAIL_SERVER')
 EMAIL_USER = os.environ.get('EMAIL_USER')
@@ -22,14 +25,14 @@ def is_iss_visible():
     iss_longitude = float(data["iss_position"]["longitude"])
 
     # Your position is within +5 or -5 degrees of the ISS position.
-    if MY_LAT -5 <= iss_latitude <= MY_LAT + 5 and MY_LONG -5 <= iss_longitude <= MY_LONG + 5:
+    if MY_LATITUDE -5 <= iss_latitude <= MY_LATITUDE + 5 and MY_LONGITUDE -5 <= iss_longitude <= MY_LONGITUDE + 5:
         return True
     return False
 
 def is_night():
     parameters = {
-        "lat": MY_LAT,
-        "lng": MY_LONG,
+        "lat": MY_LATITUDE,
+        "lng": MY_LONGITUDE,
         "formatted": 0,
     }
 

@@ -1,13 +1,17 @@
+import os
 from datetime import datetime
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
-MY_LAT = 47.402210 # Dietikon latitude
-MY_LONG = 8.392733 # Dietikon longitude
+MY_LATITUDE = os.environ.get('MY_LATITUDE')
+MY_LONGITUDE = os.environ.get('MY_LONGITUDE')
 
 parameters = {
-    "lat": MY_LAT,
-    "lng": MY_LONG,
+    "lat": MY_LATITUDE,
+    "lng": MY_LONGITUDE,
     "formatted": 0,
 }
 

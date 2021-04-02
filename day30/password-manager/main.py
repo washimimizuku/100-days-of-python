@@ -4,7 +4,9 @@ import pyperclip
 import random
 import tkinter
 from tkinter import messagebox
+from dotenv import load_dotenv
 
+load_dotenv()
 
 # ---------------------------- CONSTANTS ------------------------------- #
 LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -12,6 +14,7 @@ LOGO_FILENAME = "logo.png"
 LOGO_FILE = os.path.join(LOCATION, LOGO_FILENAME)
 DATA_FILENAME = "data.json"
 DATA_FILE = os.path.join(LOCATION, DATA_FILENAME)
+MY_EMAIL = os.environ.get('MY_EMAIL')
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
 def generate_password():
@@ -124,7 +127,7 @@ email_label.grid(column=0, row=2)
 
 email_entry = tkinter.Entry(width=40)
 email_entry.grid(column=1, row=2, columnspan=2)
-email_entry.insert(0, "nbarreto@gmail.com")
+email_entry.insert(0, MY_EMAIL)
 
 # Row 3
 password_label = tkinter.Label(text="Password:")
