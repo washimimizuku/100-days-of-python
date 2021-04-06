@@ -12,6 +12,7 @@ requests = "*"
 twilio = "*"
 python-dotenv = "*"
 beautifulsoup4 = "*"
+requests-html = "*"
 
 [dev-packages]
 
