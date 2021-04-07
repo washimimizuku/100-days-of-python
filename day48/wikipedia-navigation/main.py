@@ -27,4 +27,4 @@ search.send_keys("Python")
 search.send_keys(Keys.ENTER)
 
 
-#driver.close()
+driver.close()
