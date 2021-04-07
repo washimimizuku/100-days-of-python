@@ -3,6 +3,9 @@ import os
 import pandas
 import random
 import smtplib
+from dotenv import load_dotenv
+
+load_dotenv()
 
 
 LOCATION = os.path.realpath(os.path.join(os.getcwd(), os.path.dirname(__file__)))
@@ -35,6 +38,7 @@ if today in birthdays:
         connection.starttls()
         connection.login(user=EMAIL_USER, password=EMAIL_PASSWORD)
         connection.sendmail(
-            from_addr=my_email,
-            to_addr=person["email"],
-            msg=f"Subject:Happy Birthday!\n\n{template_text}")
+            from_addr=EMAIL_USER,
+            to_addrs=person["email"],
+            msg=f"Subject:Happy Birthday!\n\n{template_text}"
+        )

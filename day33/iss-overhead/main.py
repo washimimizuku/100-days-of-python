@@ -14,6 +14,7 @@ MY_LONGITUDE = os.environ.get('MY_LONGITUDE')
 EMAIL_SERVER = os.environ.get('EMAIL_SERVER')
 EMAIL_USER = os.environ.get('EMAIL_USER')
 EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+MY_EMAIL = os.environ.get('MY_EMAIL')
 
 
 def is_iss_visible():
@@ -51,11 +52,10 @@ def is_night():
 while True:
     time.sleep(60)
     if is_iss_visible() and is_night():
-        with smtplib.SMTP(EMAIL_SERVER) as connection:
-            connection.starttls()
-            connection.login(user=EMAIL_USER, password=EMAIL_PASSWORD)
-            connection.sendmail(
-                from_addr=my_email,
-                to_addr=my_email,
-                msg=f"Subject:Look Up!\n\nThe ISS is above you in the sky!")
-
+    with smtplib.SMTP(EMAIL_SERVER) as connection:
+        connection.starttls()
+        connection.login(user=EMAIL_USER, password=EMAIL_PASSWORD)
+        connection.sendmail(
+            from_addr=EMAIL_USER,
+            to_addrs=MY_EMAIL,
+            msg=f"Subject:Look Up!\n\nThe ISS is above you in the sky!")
