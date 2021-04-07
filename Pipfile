@@ -13,6 +13,7 @@ twilio = "*"
 python-dotenv = "*"
 beautifulsoup4 = "*"
 requests-html = "*"
+spotipy = "*"
 
 [dev-packages]
 
