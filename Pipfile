@@ -15,6 +15,7 @@ beautifulsoup4 = "*"
 requests-html = "*"
 spotipy = "*"
 selenium = "*"
+flask = "*"
 
 [dev-packages]
 
