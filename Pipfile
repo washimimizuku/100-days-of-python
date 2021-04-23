@@ -16,6 +16,9 @@ requests-html = "*"
 spotipy = "*"
 selenium = "*"
 flask = "*"
+flask-wtf = "*"
+email-validator = "*"
+flask-bootstrap = "*"
 
 [dev-packages]
 
