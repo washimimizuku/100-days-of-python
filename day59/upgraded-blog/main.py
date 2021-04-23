@@ -22,12 +22,12 @@ def get_home():
     blog_response = requests.get(BLOG_API_URL)
     all_posts = blog_response.json()
 
-    return render_template("index.html", posts=all_posts)
+    return render_template("index.html.jinja", posts=all_posts)
 
 
 @app.route('/about')
 def get_about():
-    return render_template("about.html")
+    return render_template("about.html.jinja")
 
 
 @app.route('/contact', methods=['GET', 'POST'])
@@ -35,8 +35,8 @@ def get_contact():
     if request.method == 'POST':
         data = request.form
         send_email(data["name"], data["email"], data["phone"], data["message"])
-        return render_template("contact.html", msg_sent=True)
-    return render_template("contact.html", msg_sent=False)
+        return render_template("contact.html.jinja", msg_sent=True)
+    return render_template("contact.html.jinja", msg_sent=False)
 
 
 def send_email(name, email, phone, message):
@@ -57,7 +57,7 @@ def get_post(id):
         if post["id"] == int(id):
             blog_post = post
     
-    return render_template("post.html", post=blog_post)
+    return render_template("post.html.jinja", post=blog_post)
 
 
 if __name__ == "__main__":

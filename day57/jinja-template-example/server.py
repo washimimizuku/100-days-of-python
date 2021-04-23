@@ -11,7 +11,7 @@ app = Flask(__name__)
 def home():
     random_number = random.randint(1, 10)
     current_year = datetime.datetime.now().year
-    return render_template('index.html', num=random_number, year=current_year)
+    return render_template('index.html.jinja', num=random_number, year=current_year)
 
 
 @app.route('/guess/<name>')
@@ -26,7 +26,7 @@ def guess(name):
     age_data = age_response.json()
     age = age_data["age"]
 
-    return render_template('guess.html', name=name, gender=gender, age=age)
+    return render_template('guess.html.jinja', name=name, gender=gender, age=age)
 
 
 @app.route('/blog/<num>')
@@ -35,7 +35,7 @@ def get_blog(num):
     blog_response = requests.get(blog_url)
     all_posts = blog_response.json()
 
-    return render_template('blog.html', posts=all_posts, num=int(num))
+    return render_template('blog.html.jinja', posts=all_posts, num=int(num))
 
 if __name__ == "__main__":
     app.run(debug=True)
