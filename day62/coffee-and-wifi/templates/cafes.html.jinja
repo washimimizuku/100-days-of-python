@@ -16,12 +16,21 @@
       <h1>All Cafes</h1>
 
 	  <table class="table">
-          <!-- This is where you will write the code to render a Bootstrap 
-          Table that contains all the information from the 
-          cafe-data.csv file. -->
-  	  </table>
+      {% for cafe in cafes %}
+      <tr>
+        <td>{{ cafe[0] }}</td>
+        <td>{% if cafe[1] == 'Location'%}}{{ cafe[1] }}{% else %}<a href="{{ cafe[1] }}">Maps Link</a>{% endif %}</td>
+        <td>{{ cafe[2] }}</td>
+        <td>{{ cafe[3] }}</td>
+        <td>{{ cafe[4] }}</td>
+        <td>{{ cafe[5] }}</td>
+        <td>{{ cafe[6] }}</td>
+        <td>{{ cafe[7] }}</td>
+      </tr>
+      {% endfor %}
+  	</table>
 
-      <p><a href="#">Return to index page</a></p>
+    <p><a href="{{ url_for('home') }}">Return to index page</a></p>
 
     </div>
   </div>
