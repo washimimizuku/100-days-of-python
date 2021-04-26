@@ -32,7 +32,7 @@ class CafeForm(FlaskForm):
 # all Flask routes below
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html.jinja")
 
 
 @app.route('/add')
@@ -43,7 +43,7 @@ def add_cafe():
     # Exercise:
     # Make the form write a new row into cafe-data.csv
     # with   if form.validate_on_submit()
-    return render_template('add.html', form=form)
+    return render_template('add.html.jinja', form=form)
 
 
 @app.route('/cafes')
@@ -53,7 +53,7 @@ def cafes():
         list_of_rows = []
         for row in csv_data:
             list_of_rows.append(row)
-    return render_template('cafes.html', cafes=list_of_rows)
+    return render_template('cafes.html.jinja', cafes=list_of_rows)
 
 
 if __name__ == '__main__':
