@@ -22,6 +22,32 @@ class Book(db.Model):
 
 db.create_all()
 
+# Create
 new_book = Book(id=1, title="Harry Potter", author="J. K. Rowling", rating=9.3)
 db.session.add(new_book)
+db.session.commit()
+
+# List
+all_books = db.session.query(Book).all()
+print(all_books)
+
+# Get
+book = Book.query.filter_by(title="Harry Potter").first()
+print(book)
+
+# Update by query
+book_to_update = Book.query.filter_by(title="Harry Potter").first()
+book_to_update.title = "Harry Potter and the Chamber of Secrets"
+db.session.commit()  
+
+# Update by id
+book_id = 1
+book_to_update = Book.query.get(book_id)
+book_to_update.title = "Harry Potter and the Goblet of Fire"
+db.session.commit()  
+
+# Delete
+book_id = 1
+book_to_delete = Book.query.get(book_id)
+db.session.delete(book_to_delete)
 db.session.commit()
