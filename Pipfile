@@ -19,6 +19,7 @@ flask = "*"
 flask-wtf = "*"
 email-validator = "*"
 flask-bootstrap = "*"
+flask-sqlalchemy = "*"
 
 [dev-packages]
 
