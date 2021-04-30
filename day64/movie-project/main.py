@@ -4,7 +4,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.validators import DataRequired
+import os
 import requests
+from dotenv import load_dotenv
+
+load_dotenv()
+
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
+TMDB_SEARCH_URL = "https://api.themoviedb.org/3/search/movie"
+TMDB_INFO_URL = "https://api.themoviedb.org/3/movie"
+TMDB_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'SOME_REALLY_SECRET_KEY'
@@ -45,7 +54,36 @@ class FindMovieForm(FlaskForm):
 @app.route("/add", methods=["GET", "POST"])
 def add_movie():
     form = FindMovieForm()
+
+    if form.validate_on_submit():
+        movie_title = form.title.data
+        response = requests.get(TMDB_SEARCH_URL, params={
+            "api_key": TMDB_API_KEY, "query": movie_title})
+        data = response.json()["results"]
+        print(data)
+        return render_template("select.html.jinja", options=data)
+
     return render_template('add.html.jinja', form=form)
+
+
+@app.route("/find")
+def find_movie():
+    movie_api_id = request.args.get("id")
+    if movie_api_id:
+        movie_api_url = f"{TMDB_INFO_URL}/{movie_api_id}"
+        response = requests.get(movie_api_url, params={
+                                "api_key": TMDB_API_KEY, "language": "en-US"})
+        data = response.json()
+        new_movie = Movie(
+            title=data["title"],
+            # Remove month and day
+            year=data["release_date"].split("-")[0],
+            image_url=f"{TMDB_IMAGE_URL}{data['poster_path']}",
+            description=data["overview"]
+        )
+        db.session.add(new_movie)
+        db.session.commit()
+        return redirect(url_for("home"))
 
 
 class RateMovieForm(FlaskForm):
