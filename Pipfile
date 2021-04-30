@@ -20,6 +20,7 @@ flask-wtf = "*"
 email-validator = "*"
 flask-bootstrap = "*"
 flask-sqlalchemy = "*"
+autopep8 = "*"
 
 [dev-packages]
 

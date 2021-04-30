@@ -38,13 +38,13 @@ print(book)
 # Update by query
 book_to_update = Book.query.filter_by(title="Harry Potter").first()
 book_to_update.title = "Harry Potter and the Chamber of Secrets"
-db.session.commit()  
+db.session.commit()
 
 # Update by id
 book_id = 1
 book_to_update = Book.query.get(book_id)
 book_to_update.title = "Harry Potter and the Goblet of Fire"
-db.session.commit()  
+db.session.commit()
 
 # Delete
 book_id = 1
