@@ -42,7 +42,13 @@ db.create_all()
 
 @app.route("/")
 def home():
-    all_movies = Movie.query.all()
+    all_movies = Movie.query.order_by(Movie.rating).all()
+
+    # Order by rating
+    for i in range(len(all_movies)):
+        all_movies[i].ranking = len(all_movies) - i
+    db.session.commit()
+
     return render_template("index.html.jinja", movies=all_movies)
 
 
@@ -83,7 +89,7 @@ def find_movie():
         )
         db.session.add(new_movie)
         db.session.commit()
-        return redirect(url_for("home"))
+        return redirect(url_for("rate_movie", id=new_movie.id))
 
 
 class RateMovieForm(FlaskForm):
