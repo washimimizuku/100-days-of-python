@@ -63,18 +63,17 @@ def get_search():
 @app.route("/add", methods=["POST"])
 def add_cafe():
     new_cafe = Cafe(
-        name=request.form.get("name"),
-        map_url=request.form.get("map_url"),
-        img_url=request.form.get("img_url"),
-        location=request.form.get("location"),
-        seats=request.form.get("seats"),
-        has_toilet=request.form.get("has_toilet") == 'true',
-        has_wifi=request.form.get("has_wifi") == 'true',
-        has_sockets=request.form.get("has_sockets") == 'true',
-        can_take_calls=request.form.get("can_take_calls") == 'true',
-        coffee_price=request.form.get("coffee_price"),
+        name=request.json["name"],
+        map_url=request.json["map_url"],
+        img_url=request.json["img_url"],
+        location=request.json["location"],
+        seats=request.json["seats"],
+        has_toilet=request.json["has_toilet"],
+        has_wifi=request.json["has_wifi"],
+        has_sockets=request.json["has_sockets"],
+        can_take_calls=request.json["can_take_calls"],
+        coffee_price=request.json["coffee_price"],
     )
-    print(new_cafe)
     db.session.add(new_cafe)
     db.session.commit()
     return jsonify(response={"success": "Successfully added the new cafe."})
