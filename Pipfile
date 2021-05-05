@@ -21,6 +21,7 @@ email-validator = "*"
 flask-bootstrap = "*"
 flask-sqlalchemy = "*"
 autopep8 = "*"
+flask-ckeditor = "*"
 
 [dev-packages]
 
