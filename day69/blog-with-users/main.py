@@ -152,18 +152,16 @@ def show_post(post_id):
     requested_post = BlogPost.query.get(post_id)
 
     if form.validate_on_submit():
-
         if not current_user.is_authenticated:
             flash("You need to login or register to comment.")
-            return redirect(url_for('login'))
+            return redirect(url_for("login"))
 
         new_comment = Comment(
             text=form.comment_text.data,
             comment_author=current_user,
             parent_post=requested_post
         )
-
-        db.session.add(new_user)
+        db.session.add(new_comment)
         db.session.commit()
 
     return render_template("post.html.jinja", post=requested_post, form=form, current_user=current_user)
