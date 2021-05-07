@@ -14,7 +14,16 @@ app.config['SECRET_KEY'] = 'THIS_IS_A_REALLY_SECRET_KEY'
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
-# CONNECT TO DB
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+# Connect to database
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
@@ -74,7 +83,17 @@ def register():
 
 @app.route('/login')
 def login():
-    return render_template("login.html.jinja")
+    form = LoginForm()
+    if form.validate_on_submit():
+        email = form.email.data,
+        password = form.password.data
+
+        user = User.query.filter_by(email=email).first()
+        if user and check_password_hash(user.password, password):
+            login_user(user)
+            redirect(url_for("get_all_posts"))
+
+    return render_template("login.html.jinja", form=form)
 
 
 @app.route('/logout')
