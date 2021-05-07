@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm, RegisterForm
+from forms import CreatePostForm, RegisterForm, LoginForm
 from flask_gravatar import Gravatar
 
 app = Flask(__name__)
@@ -54,7 +54,7 @@ db.create_all()
 @app.route('/')
 def get_all_posts():
     posts = BlogPost.query.all()
-    return render_template("index.html.jinja", all_posts=posts)
+    return render_template("index.html.jinja", all_posts=posts, current_user=current_user)
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -62,11 +62,8 @@ def register():
     form = RegisterForm()
 
     if form.validate_on_submit():
-        # If user's email already exists
         if User.query.filter_by(email=form.email.data).first():
-            # Send flash messsage
             flash("You've already signed up with that email, log in instead!")
-            # Redirect to /login route.
             return redirect(url_for('login'))
 
         hashed_password = generate_password_hash(
@@ -87,43 +84,51 @@ def register():
 
         return redirect(url_for("get_all_posts"))
 
-    return render_template("register.html.jinja", form=form)
+    return render_template("register.html.jinja", form=form, current_user=current_user)
 
 
-@app.route('/login')
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        email = form.email.data,
+        email = form.email.data
         password = form.password.data
 
         user = User.query.filter_by(email=email).first()
-        if user and check_password_hash(user.password, password):
-            login_user(user)
-            redirect(url_for("get_all_posts"))
 
-    return render_template("login.html.jinja", form=form)
+        if not user:
+            flash("That email does not exist, please try again.")
+            return redirect(url_for('login'))
+        elif not check_password_hash(user.password, password):
+            flash('Password incorrect, please try again.')
+            return redirect(url_for('login'))
+        else:
+            login_user(user)
+            return redirect(url_for('get_all_posts'))
+
+    return render_template("login.html.jinja", form=form, current_user=current_user)
 
 
 @app.route('/logout')
 def logout():
+    logout_user()
     return redirect(url_for('get_all_posts'))
 
 
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
     requested_post = BlogPost.query.get(post_id)
-    return render_template("post.html.jinja", post=requested_post)
+    return render_template("post.html.jinja", post=requested_post, current_user=current_user)
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html.jinja")
+    return render_template("about.html.jinja", current_user=current_user)
 
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html.jinja")
+    return render_template("contact.html.jinja", current_user=current_user)
 
 
 @app.route("/new-post")
@@ -141,7 +146,7 @@ def add_new_post():
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
-    return render_template("make-post.html.jinja", form=form)
+    return render_template("make-post.html.jinja", form=form, current_user=current_user)
 
 
 @app.route("/edit-post/<int:post_id>")
@@ -163,7 +168,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    return render_template("make-post.html.jinja", form=edit_form)
+    return render_template("make-post.html.jinja", form=edit_form, current_user=current_user)
 
 
 @app.route("/delete/<int:post_id>")
