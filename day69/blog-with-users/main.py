@@ -6,7 +6,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship
 from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
-from forms import CreatePostForm
+from forms import CreatePostForm, RegisterForm
 from flask_gravatar import Gravatar
 
 app = Flask(__name__)
@@ -20,7 +20,13 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
 
-# CONFIGURE TABLES
+class User(UserMixin, db.Model):
+    __tablename__ = "users"
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(100))
+    name = db.Column(db.String(100))
+
 
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
@@ -39,17 +45,36 @@ db.create_all()
 @app.route('/')
 def get_all_posts():
     posts = BlogPost.query.all()
-    return render_template("index.html", all_posts=posts)
+    return render_template("index.html.jinja", all_posts=posts)
 
 
-@app.route('/register')
+@app.route('/register', methods=['GET', 'POST'])
 def register():
-    return render_template("register.html")
+    form = RegisterForm()
+
+    if form.validate_on_submit():
+        hashed_password = generate_password_hash(
+            form.password.data,
+            method='pbkdf2:sha256',
+            salt_length=8
+        )
+
+        new_user = User(
+            email=form.email.data,
+            name=form.name.data,
+            password=hashed_password,
+        )
+        db.session.add(new_user)
+        db.session.commit()
+
+        return redirect(url_for("get_all_posts"))
+
+    return render_template("register.html.jinja", form=form)
 
 
 @app.route('/login')
 def login():
-    return render_template("login.html")
+    return render_template("login.html.jinja")
 
 
 @app.route('/logout')
@@ -60,17 +85,17 @@ def logout():
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
     requested_post = BlogPost.query.get(post_id)
-    return render_template("post.html", post=requested_post)
+    return render_template("post.html.jinja", post=requested_post)
 
 
 @app.route("/about")
 def about():
-    return render_template("about.html")
+    return render_template("about.html.jinja")
 
 
 @app.route("/contact")
 def contact():
-    return render_template("contact.html")
+    return render_template("contact.html.jinja")
 
 
 @app.route("/new-post")
@@ -88,7 +113,7 @@ def add_new_post():
         db.session.add(new_post)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
-    return render_template("make-post.html", form=form)
+    return render_template("make-post.html.jinja", form=form)
 
 
 @app.route("/edit-post/<int:post_id>")
@@ -110,7 +135,7 @@ def edit_post(post_id):
         db.session.commit()
         return redirect(url_for("show_post", post_id=post.id))
 
-    return render_template("make-post.html", form=edit_form)
+    return render_template("make-post.html.jinja", form=edit_form)
 
 
 @app.route("/delete/<int:post_id>")
