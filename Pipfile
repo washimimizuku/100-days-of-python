@@ -23,6 +23,7 @@ flask-sqlalchemy = "*"
 autopep8 = "*"
 flask-ckeditor = "*"
 flask-login = "*"
+flask-gravatar = "*"
 
 [dev-packages]
 
