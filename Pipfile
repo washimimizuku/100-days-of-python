@@ -22,6 +22,7 @@ flask-bootstrap = "*"
 flask-sqlalchemy = "*"
 autopep8 = "*"
 flask-ckeditor = "*"
+flask-login = "*"
 
 [dev-packages]
 
