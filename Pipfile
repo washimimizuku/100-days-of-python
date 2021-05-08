@@ -25,6 +25,7 @@ flask-ckeditor = "*"
 flask-login = "*"
 flask-gravatar = "*"
 gunicorn = "*"
+psycopg2-binary = "*"
 
 [dev-packages]
 

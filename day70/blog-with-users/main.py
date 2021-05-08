@@ -10,10 +10,13 @@ from forms import CreatePostForm, RegisterForm, LoginForm, CommentForm
 from flask_gravatar import Gravatar
 from functools import wraps
 from flask_gravatar import Gravatar
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'THIS_IS_A_REALLY_SECRET_KEY'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY')
 ckeditor = CKEditor(app)
 Bootstrap(app)
 
@@ -41,7 +44,8 @@ def admin_only(f):
 
 
 # Connect to database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///blog.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'SQLALCHEMY_DATABASE_URI')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
