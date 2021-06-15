@@ -56,9 +56,10 @@ def get_post(id):
     for post in posts:
         if post["id"] == int(id):
             blog_post = post
-    
+
     return render_template("post.html.jinja", post=blog_post)
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run()

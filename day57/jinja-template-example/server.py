@@ -20,7 +20,7 @@ def guess(name):
     gender_response = requests.get(gender_url)
     gender_data = gender_response.json()
     gender = gender_data["gender"]
-    
+
     age_url = f"https://api.agify.io/?name={name}"
     age_response = requests.get(age_url)
     age_data = age_response.json()
@@ -37,5 +37,7 @@ def get_blog(num):
 
     return render_template('blog.html.jinja', posts=all_posts, num=int(num))
 
+
 if __name__ == "__main__":
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run()

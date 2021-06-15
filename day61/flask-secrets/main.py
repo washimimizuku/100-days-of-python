@@ -8,7 +8,8 @@ import email_validator
 
 class LoginForm(FlaskForm):
     email = StringField(label="Email", validators=[DataRequired(), Email()])
-    password = PasswordField(label="Password", validators=[DataRequired(), Length(8)])
+    password = PasswordField(label="Password", validators=[
+                             DataRequired(), Length(8)])
     submit = SubmitField(label="Log In")
 
 
@@ -34,4 +35,5 @@ def login():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    # app.run(debug=True)
+    app.run()
