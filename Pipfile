@@ -26,6 +26,7 @@ flask-login = "*"
 flask-gravatar = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
+ipykernel = "*"
 
 [dev-packages]
 
