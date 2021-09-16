@@ -27,6 +27,7 @@ flask-gravatar = "*"
 gunicorn = "*"
 psycopg2-binary = "*"
 ipykernel = "*"
+matplotlib = "*"
 
 [dev-packages]
 
