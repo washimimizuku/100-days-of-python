@@ -3,14 +3,14 @@ import pandas as pd
 import matplotlib.pyplot as plt
 
 
+pd.options.display.float_format = '{:,.2f}'.format
+
 LOCATION = os.path.realpath(os.path.join(
     os.getcwd(), os.path.dirname(__file__)))
 FULL_PATH = os.path.join(LOCATION, 'QueryResults.csv')
 
 df = pd.read_csv(FULL_PATH,
                  header=0, names=['DATE', 'TAG', 'POSTS'])
-
-pd.options.display.float_format = '{:,.2f}'.format
 
 # Data exploration
 
