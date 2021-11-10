@@ -28,6 +28,8 @@ gunicorn = "*"
 psycopg2-binary = "*"
 ipykernel = "*"
 matplotlib = "*"
+plotly = "*"
+nbformat = "*"
 
 [dev-packages]
 
