@@ -30,6 +30,7 @@ ipykernel = "*"
 matplotlib = "*"
 plotly = "*"
 nbformat = "*"
+scipy = "*"
 
 [dev-packages]
 
