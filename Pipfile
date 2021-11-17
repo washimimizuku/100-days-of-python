@@ -33,6 +33,7 @@ nbformat = "*"
 scipy = "*"
 seaborn = "*"
 sklearn = "*"
+statsmodels = "*"
 
 [dev-packages]
 
