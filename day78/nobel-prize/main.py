@@ -215,3 +215,82 @@ ax2.plot(prize_per_year.index,
          linewidth=3,)
 
 plt.show()
+
+# Countries with most prizes
+
+top_countries = df_data.groupby(['birth_country_current'],
+                                as_index=False).agg({'prize': pd.Series.count})
+
+top_countries.sort_values(by='prize', inplace=True)
+top20_countries = top_countries[-20:]
+
+h_bar = px.bar(x=top20_countries.prize,
+               y=top20_countries.birth_country_current,
+               orientation='h',
+               color=top20_countries.prize,
+               color_continuous_scale='Viridis',
+               title='Top 20 Countries by Number of Prizes')
+
+h_bar.update_layout(xaxis_title='Number of Prizes',
+                    yaxis_title='Country',
+                    coloraxis_showscale=False)
+h_bar.show()
+
+# Map visualization
+df_countries = df_data.groupby(['birth_country_current', 'ISO'],
+                               as_index=False).agg({'prize': pd.Series.count})
+df_countries.sort_values('prize', ascending=False)
+
+world_map = px.choropleth(df_countries,
+                          locations='ISO',
+                          color='prize',
+                          hover_name='birth_country_current',
+                          color_continuous_scale=px.colors.sequential.matter)
+
+world_map.update_layout(coloraxis_showscale=True,)
+
+world_map.show()
+
+# By Category
+cat_country = df_data.groupby(['birth_country_current', 'category'],
+                              as_index=False).agg({'prize': pd.Series.count})
+cat_country.sort_values(by='prize', ascending=False, inplace=True)
+print(cat_country)
+
+merged_df = pd.merge(cat_country, top20_countries, on='birth_country_current')
+# change column names
+merged_df.columns = ['birth_country_current',
+                     'category', 'cat_prize', 'total_prize']
+merged_df.sort_values(by='total_prize', inplace=True)
+print(merged_df)
+
+cat_cntry_bar = px.bar(x=merged_df.cat_prize,
+                       y=merged_df.birth_country_current,
+                       color=merged_df.category,
+                       orientation='h',
+                       title='Top 20 Countries by Number of Prizes and Category')
+
+cat_cntry_bar.update_layout(xaxis_title='Number of Prizes',
+                            yaxis_title='Country')
+cat_cntry_bar.show()
+
+# Over Time
+prize_by_year = df_data.groupby(
+    by=['birth_country_current', 'year'], as_index=False).count()
+prize_by_year = prize_by_year.sort_values(
+    'year')[['year', 'birth_country_current', 'prize']]
+
+cumulative_prizes = prize_by_year.groupby(by=['birth_country_current',
+                                              'year']).sum().groupby(level=[0]).cumsum()
+cumulative_prizes.reset_index(inplace=True)
+
+l_chart = px.line(cumulative_prizes,
+                  x='year',
+                  y='prize',
+                  color='birth_country_current',
+                  hover_name='birth_country_current')
+
+l_chart.update_layout(xaxis_title='Year',
+                      yaxis_title='Number of Prizes')
+
+l_chart.show()
