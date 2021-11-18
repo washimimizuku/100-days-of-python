@@ -100,3 +100,48 @@ ax2.plot(df_monthly.date,
          linestyle='--')
 
 plt.show()
+
+# Data Split by clinic
+
+line = px.line(df_yearly,
+               x='year',
+               y='births',
+               color='clinic',
+               title='Total Yearly Births by Clinic')
+
+line.show()
+
+line = px.line(df_yearly,
+               x='year',
+               y='deaths',
+               color='clinic',
+               title='Total Yearly Deaths by Clinic')
+
+line.show()
+
+# Proportion of Deaths
+
+df_yearly['pct_deaths'] = df_yearly.deaths / df_yearly.births
+
+clinic_1 = df_yearly[df_yearly.clinic == 'clinic 1']
+avg_c1 = clinic_1.deaths.sum() / clinic_1.births.sum() * 100
+
+print(f'Average death rate in clinic 1 is {avg_c1:.3}%.')
+
+clinic_2 = df_yearly[df_yearly.clinic == 'clinic 2']
+avg_c2 = clinic_2.deaths.sum() / clinic_2.births.sum() * 100
+
+print(f'Average death rate in clinic 2 is {avg_c2:.3}%.')
+
+line = px.line(df_yearly,
+               x='year',
+               y='pct_deaths',
+               color='clinic',
+               title='Proportion of Yearly Deaths by Clinic')
+
+line.show()
+
+# Handwashing Implementation
+
+# Date when handwashing was made mandatory
+handwashing_start = pd.to_datetime('1847-06-01')
