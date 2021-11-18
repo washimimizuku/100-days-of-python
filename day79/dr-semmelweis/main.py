@@ -23,8 +23,11 @@ df_monthly = pd.read_csv(os.path.join(LOCATION, 'data/monthly_deaths.csv'),
 
 # Data Exploration
 
+print(df_monthly.shape)
+print(df_monthly.head())
+
 print(df_yearly.shape)
 print(df_yearly.head())
 
-print(df_monthly.shape)
-print(df_monthly.head())
+print(df_monthly.info())
+print(df_yearly.info())
