@@ -145,3 +145,14 @@ line.show()
 
 # Date when handwashing was made mandatory
 handwashing_start = pd.to_datetime('1847-06-01')
+
+df_monthly['pct_deaths'] = df_monthly.deaths/df_monthly.births
+
+before_washing = df_monthly[df_monthly.date < handwashing_start]
+after_washing = df_monthly[df_monthly.date >= handwashing_start]
+
+bw_rate = before_washing.deaths.sum() / before_washing.births.sum() * 100
+aw_rate = after_washing.deaths.sum() / after_washing.births.sum() * 100
+
+print(f'Average death rate before 1847 was {bw_rate:.4}%')
+print(f'Average death rate AFTER 1847 was {aw_rate:.3}%')
