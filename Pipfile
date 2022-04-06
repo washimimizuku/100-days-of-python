@@ -34,8 +34,10 @@ scipy = "*"
 seaborn = "*"
 sklearn = "*"
 statsmodels = "*"
+numpy = "*"
 
 [dev-packages]
+notebook = "*"
 
 [requires]
 python_version = "3.9"
