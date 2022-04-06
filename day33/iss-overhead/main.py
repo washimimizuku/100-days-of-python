@@ -52,10 +52,10 @@ def is_night():
 while True:
     time.sleep(60)
     if is_iss_visible() and is_night():
-    with smtplib.SMTP(EMAIL_SERVER) as connection:
-        connection.starttls()
-        connection.login(user=EMAIL_USER, password=EMAIL_PASSWORD)
-        connection.sendmail(
-            from_addr=EMAIL_USER,
-            to_addrs=MY_EMAIL,
-            msg=f"Subject:Look Up!\n\nThe ISS is above you in the sky!")
+        with smtplib.SMTP(EMAIL_SERVER) as connection:
+            connection.starttls()
+            connection.login(user=EMAIL_USER, password=EMAIL_PASSWORD)
+            connection.sendmail(
+                from_addr=EMAIL_USER,
+                to_addrs=MY_EMAIL,
+                msg=f"Subject:Look Up!\n\nThe ISS is above you in the sky!")
