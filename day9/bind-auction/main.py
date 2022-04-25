@@ -9,7 +9,7 @@ bidding = True
 while bidding:
     name = input("What is your name?: ")
     bid = int(input("What is your bid?: $"))
-    more_bidders = input("Are there any other bidders? Type 'yes' or 'no'")
+    more_bidders = input("Are there any other bidders? Type 'yes' or 'no': ")
 
     bids.append({
         "name": name,
