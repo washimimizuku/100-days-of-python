@@ -64,7 +64,7 @@ def insert_coins():
     }
 
 def give_change(total, cost):
-    change = total - cost
+    change = round(total - cost, 2)
     print(f"Here is ${change} dollars in change.")
 
 def make_coffee(order, ingredients):
