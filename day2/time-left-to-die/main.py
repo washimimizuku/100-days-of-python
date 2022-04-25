@@ -1,4 +1,4 @@
-age = input("What is your current age?")
+age = input("What is your current age? ")
 
 time_left = 90 - int(age)
 days = time_left * 365
