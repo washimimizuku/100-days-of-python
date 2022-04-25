@@ -31,7 +31,7 @@ while again:
 
     caesar(start_text=text, shift_amount=shift, cipher_direction=direction)
 
-    repeat = input("Type 'yes' if you want to go again. Otherwise type 'no'.")
+    repeat = input("Type 'yes' if you want to go again, otherwise type 'no': ")
 
     if repeat != 'yes':
         again = False
