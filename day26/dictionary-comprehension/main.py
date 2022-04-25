@@ -1,6 +1,6 @@
 from random import randint
 
-names = ["Alex", "Beth", "Caroline", "Dave", "Eleanor", "Freedie", "Nuno", "Angela"]
+names = ["Alex", "Beth", "Caroline", "Dave", "Eleanor", "Freddie", "Nuno", "Angela"]
 students_scores = {student: randint(1, 100) for student in names}
 print(students_scores)
 
