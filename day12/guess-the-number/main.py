@@ -9,7 +9,7 @@ logo = '''
 '''
 print(logo)
 print("Welcome to the number guessing game!")
-print("I am thinking of a number between 1 and 0")
+print("I am thinking of a number between 1 and 100")
 
 number = randint(1, 100)
 
