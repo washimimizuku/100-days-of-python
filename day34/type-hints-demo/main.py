@@ -1,5 +1,5 @@
 age: int
-name: string
+name: str
 height: float
 is_human: bool
 
