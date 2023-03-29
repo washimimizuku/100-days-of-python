@@ -31,7 +31,7 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "5.15.4",
         "bootstrap": "4.6.2",
-        "jquery": "3.6.3"
+        "jquery": "3.6.4"
     },
     "devDependencies": {
         "browser-sync": "2.26.13",
